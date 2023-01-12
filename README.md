@@ -1,2 +1,2 @@
-# Issue-Tracker
-This Web App should allow users to create Tickets and allows admins to review them and answer them
+# TicketTackler
+A Issue Tracker where users can submit Tickets with issues or improvments and the admins or people with permission can handle those tickets 
