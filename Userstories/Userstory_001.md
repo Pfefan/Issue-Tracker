@@ -19,3 +19,7 @@ Ticket info, topic, revelance, Title
 ## Output Data
 
 The Data will be saved to the backend database, Ticket will be shown in the front end
+
+## Errors:
+
+Data cant be saved to the database, User didnt enter valid data in the text boxes

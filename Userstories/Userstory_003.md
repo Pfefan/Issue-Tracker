@@ -19,3 +19,7 @@ Ticket info, topic, revelance, Title
 ## Output Data
 
 The Data will be saved to the backend database, Ticket will be shown in the front end with a high demand to fix
+
+## Errors
+
+Invalid Ticket has been submitted
