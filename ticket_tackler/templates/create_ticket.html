@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <title>Create Ticket</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
 </head>
 <body>
     <h1>Create Ticket</h1>
@@ -12,6 +14,14 @@
         <br>
         <label for="description">Description:</label>
         <textarea id="description" name="description"></textarea>
+        <br>
+        <br>
+        <label for="topic">Topic:</label>
+        <textarea id="topic" name="topic"></textarea>
+        <br>
+        <br>
+        <label for="relevance">relevance:</label>
+        <textarea id="relevance" name="relevance"></textarea>
         <br>
         <input type="submit" value="Submit">
     </form>

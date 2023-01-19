@@ -1,0 +1,8 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">'
+<form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+</form>
+<a href="{% url 'register' %}">Don't have an account? Register</a>
