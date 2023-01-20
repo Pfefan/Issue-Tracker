@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Ticket</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+</head>
+<body>
+    <h1>View Ticket</h1>
+    <div>
+        <h2>{{ ticket.title }}</h2>
+        <p>{{ ticket.content }}</p>
+        <p>Topic: {{ ticket.topic }}</p>
+        <p>Relevance: {{ ticket.relevance }}</p>
+        <p>Resolved: {{ ticket.resolved }}</p>
+        <p>Create Time: {{ ticket.create_time }}</p>
+        {% if user == ticket.user_id %}
+        <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">
+            {% csrf_token %}
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="{{ ticket.title }}">
+            <br>
+            <label for="content">Content:</label>
+            <textarea id="content" name="content">{{ ticket.content }}</textarea>
+            <br>
+            <input type="submit" value="edit_ticket" name="edit">
+            <input type="submit" value="close_ticket" name="close">
+        </form>
+    {% endif %}
+    </div>
+    <div>
+        <div>
+            <h3>Replies</h3>
+            {% for reply in replies %}
+                <p>{{ reply.content }}</p>
+                <p>Reply Time: {{ reply.create_time }}</p>
+            {% endfor %}
+            <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">
+                {% csrf_token %}
+                <textarea name="content"></textarea>
+                <input type="hidden" name="Reply" value="true">
+                <input type="submit" value="Reply">
+            </form>
+            
+        </div>
+    </div>
+</body>
+</html>    

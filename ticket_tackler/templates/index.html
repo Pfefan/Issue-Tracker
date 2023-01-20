@@ -22,6 +22,7 @@
                 <th>Relevance</th>
                 <th>Resolved</th>
                 <th>Create Time</th>
+                <th>Edit</th>
             </tr>
         </thead>
         <tbody>
@@ -34,11 +35,12 @@
                 <td>{{ticket.relevance}}</td>
                 <td>{{ticket.resolved}}</td>
                 <td>{{ticket.create_time}}</td>
-                <td>Reply</td>
+                <td>
+                    <a href="{% url 'view_ticket' ticket.ticket_id %}">Edit</a>
+                </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </body>
 </html>
-

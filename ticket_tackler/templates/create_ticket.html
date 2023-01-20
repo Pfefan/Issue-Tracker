@@ -7,23 +7,29 @@
 </head>
 <body>
     <h1>Create Ticket</h1>
-    <form method="POST">
+    <form method="post" action="{% url 'create_ticket' %}">
         {% csrf_token %}
         <label for="title">Title:</label>
-        <input type="text" id="title" name="title">
+        <input type="text" name="title" id="title">
         <br>
         <label for="description">Description:</label>
-        <textarea id="description" name="description"></textarea>
-        <br>
+        <textarea name="description" id="description"></textarea>
         <br>
         <label for="topic">Topic:</label>
-        <textarea id="topic" name="topic"></textarea>
+        <select name="topic" id="topic">
+            <option value="bug">Bug</option>
+            <option value="feature">Feature</option>
+            <option value="issue">Issue</option>
+        </select>
         <br>
+        <label for="relevance">Relevance:</label>
+        <select name="relevance" id="relevance">
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+        </select>
         <br>
-        <label for="relevance">relevance:</label>
-        <textarea id="relevance" name="relevance"></textarea>
-        <br>
-        <input type="submit" value="Submit">
-    </form>
+        <input type="submit" value="Create Ticket">
+    </form>    
 </body>
 </html>
