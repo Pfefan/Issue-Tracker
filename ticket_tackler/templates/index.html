@@ -5,41 +5,65 @@
     <head>
         <title>Ticket Tackler</title>
         <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+        <script type="text/javascript" src="{% static 'js/username-popup.js' %}"></script>
+        <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     </head>    
 </head>
 <body>
+    <div class="sidebar">
+        <img src="{% static 'images/icon.png' %}" class="sidebar-icon">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    
     <h1>Ticket Tackler</h1>
-    <form method="GET" action="{% url 'create_ticket' %}">
-        <input type="submit" value="Create new Ticket">
-    </form>    
+    
+    <div id="header">
+        <form>
+            <select id="ticket-selector">
+                <option value="open">Open Tickets</option>
+                <option value="all">All Tickets</option>
+            </select>
+            <input type="text" id="search-bar" placeholder="Search Tickets">
+            <input type="submit" value="Search">
+        </form>
+        <form method="GET" action="{% url 'create_ticket' %}">
+            <input type="submit" value="Create new Ticket" id="create-ticket-button">
+        </form>   
+    </div>    
+
+    <div class="username-container" id="username-container">
+        <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
+    </div>  
+
+
+    <div id="user-popup" style="display: none;">
+        <p>Name: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    </div>    
+
     <table>
-        <thead>
-            <tr>
-                <th>Ticket ID</th>
-                <th>Title</th>
-                <th>Content</th>
-                <th>Topic</th>
-                <th>Relevance</th>
-                <th>Resolved</th>
-                <th>Create Time</th>
-                <th>Edit</th>
-            </tr>
-        </thead>
         <tbody>
             {% for ticket in tickets %}
-            <tr>
-                <td>{{ticket.ticket_id}}</td>
-                <td>{{ticket.title}}</td>
-                <td>{{ticket.content}}</td>
-                <td>{{ticket.topic}}</td>
-                <td>{{ticket.relevance}}</td>
-                <td>{{ticket.resolved}}</td>
-                <td>{{ticket.create_time}}</td>
-                <td>
-                    <a href="{% url 'view_ticket' ticket.ticket_id %}">Edit</a>
-                </td>
-            </tr>
+                <div class="ticket-rectangle">
+                    <a href="{% url 'view_ticket' ticket.ticket_id %}">
+                        <div class="ticket-id">{{ ticket.ticket_id }}</div>
+                        <div class="ticket-title">{{ ticket.title }}</div>
+                        <div class="ticket-create-time">{{ ticket.create_time }}</div>
+                        <div class="ticket-user">{{ ticket.user }}</div>
+                        <div class="ticket-type">{{ ticket.type }}</div>
+                        <div class="ticket-status">{{ ticket.status }}</div>
+                        <div class="ticket-relevance">{{ ticket.relevance }}</div>
+                    </a>
+                </div>
+            
             {% endfor %}
+
         </tbody>
     </table>
 </body>

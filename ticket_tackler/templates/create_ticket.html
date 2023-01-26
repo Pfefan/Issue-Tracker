@@ -4,9 +4,21 @@
 <head>
     <title>Create Ticket</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
     <h1>Create Ticket</h1>
+    <div class="username-container" id="username-container">
+        <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
+    </div>    
+    <div id="user-popup" style="display: none;">
+        <p>Name: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    </div>    
     <form method="post" action="{% url 'create_ticket' %}">
         {% csrf_token %}
         <label for="title">Title:</label>
@@ -16,7 +28,7 @@
         <textarea name="description" id="description"></textarea>
         <br>
         <label for="topic">Topic:</label>
-        <select name="topic" id="topic">
+        <select name="type" id="type">
             <option value="bug">Bug</option>
             <option value="feature">Feature</option>
             <option value="issue">Issue</option>

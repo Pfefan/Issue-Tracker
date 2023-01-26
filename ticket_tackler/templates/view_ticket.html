@@ -4,15 +4,30 @@
 <head>
     <title>View Ticket</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
     <h1>View Ticket</h1>
+      
+    <div class="username-container" id="username-container">
+        <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
+    </div>    
+
+    <div id="user-popup" style="display: none;">
+        <p>Name: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+    </div>    
+
     <div>
         <h2>{{ ticket.title }}</h2>
         <p>{{ ticket.content }}</p>
-        <p>Topic: {{ ticket.topic }}</p>
+        <p>Type: {{ ticket.type }}</p>
         <p>Relevance: {{ ticket.relevance }}</p>
-        <p>Resolved: {{ ticket.resolved }}</p>
+        <p>Resolved: {{ ticket.is_open }}</p>
         <p>Create Time: {{ ticket.create_time }}</p>
         {% if user == ticket.user_id %}
         <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">

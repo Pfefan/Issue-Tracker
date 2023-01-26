@@ -1,8 +1,17 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">'
-<form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
-<a href="{% url 'register' %}">Don't have an account? Register</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
+</head>
+<body>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">'
+    <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Login</button>
+    </form>
+    <a href="{% url 'register' %}">Don't have an account? Register</a>
+</body>

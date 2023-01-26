@@ -1,28 +1,50 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 
-from .forms import EditTicketForm, RegisterForm, ReplyForm
-from .models import Ticket, Ticket_Replies
+from .forms import RegisterForm
+from .models import Ticket, Ticket_Comments
 
 
+@login_required(login_url='login')
 def index(request):
+    """
+    Render the index page and display all tickets from the database.
+
+    Args:
+        request (HttpRequest): The incoming request object.
+
+    Returns:
+        HttpResponse: The rendered index page with a context containing all tickets.
+    """
     tickets = Ticket.objects.all()
     context = {'tickets': tickets}
-    
+
     return render(request, 'index.html', context)
 
 
 def create_ticket(request):
+    """
+    Handle the creation of a new ticket.
+
+    Args:
+        request (HttpRequest): The incoming request object.
+
+    Returns:
+        HttpResponse: A redirect to the index page if the ticket was created successfully,
+        or a redirect to the login page if the user is not authenticated.
+        Otherwise, it returns the create_ticket.html template.
+    """
+
     if request.method == 'POST':
         if request.user.is_authenticated:
             title = request.POST.get('title')
             description = request.POST.get('description')
-            topic = request.POST.get('topic')
+            ticket_type = request.POST.get('type')
             relevance = request.POST.get('relevance')
-            ticket_instance = Ticket.objects.create(title=title, content=description, topic = topic, relevance = relevance, resolved=False, user_id=request.user.id)
+            ticket_instance = Ticket.objects.create(title=title, content=description, type = ticket_type, relevance = relevance, is_open=True, user=request.user)
             return redirect('index')
         else:
             return redirect('login')
@@ -33,7 +55,7 @@ def create_ticket(request):
 @login_required
 def view_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, pk=ticket_id)
-    replies = Ticket_Replies.objects.filter(ticket_id=ticket_id)
+    replies = Ticket_Comments.objects.filter(ticket_id=ticket_id)
 
     if request.method == 'POST':
         if request.user == ticket.user_id:
@@ -44,10 +66,8 @@ def view_ticket(request, ticket_id):
             elif 'close' in request.POST:
                 ticket.resolved = True
                 ticket.save()
-        print(request.POST)
-        if 'Reply' in request.POST:
-            
-            reply = Ticket_Replies.objects.create(ticket_id=ticket, user_id=request.user, content=request.POST.get('content'))
+        if 'Reply' in request.POST:    
+            reply = Ticket_Comments.objects.create(ticket_id=ticket, user_id=request.user, content=request.POST.get('content'))
     context = {
         'ticket': ticket,
         'replies': replies,
@@ -68,6 +88,10 @@ def login_view(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return redirect('login')
 
 def register_view(request):
     if request.method == 'POST':
