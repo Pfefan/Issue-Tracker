@@ -3,12 +3,10 @@
 <html>
 <head>
     <title>View Ticket</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
-<body>
-    <h1>View Ticket</h1>
-      
+<body>      
     <div class="username-container" id="username-container">
         <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
     </div>    
@@ -29,7 +27,7 @@
         <p>Relevance: {{ ticket.relevance }}</p>
         <p>Resolved: {{ ticket.is_open }}</p>
         <p>Create Time: {{ ticket.create_time }}</p>
-        {% if user == ticket.user_id %}
+        {% if user == ticket.user %}
         <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">
             {% csrf_token %}
             <label for="title">Title:</label>

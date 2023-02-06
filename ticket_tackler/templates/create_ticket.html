@@ -3,10 +3,17 @@
 <html>
 <head>
     <title>Create Ticket</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
+    <div class="sidebar">
+        <img src="{% static 'images/icon.png' %}" class="sidebar-icon">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    
     <h1>Create Ticket</h1>
     <div class="username-container" id="username-container">
         <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">

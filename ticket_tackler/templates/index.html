@@ -4,7 +4,7 @@
 <head>
     <head>
         <title>Ticket Tackler</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
         <script type="text/javascript" src="{% static 'js/username-popup.js' %}"></script>
         <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
     </head>    
@@ -47,24 +47,34 @@
         </form>
     </div>    
 
-    <table>
-        <tbody>
-            {% for ticket in tickets %}
-                <div class="ticket-rectangle">
-                    <a href="{% url 'view_ticket' ticket.ticket_id %}">
-                        <div class="ticket-id">{{ ticket.ticket_id }}</div>
-                        <div class="ticket-title">{{ ticket.title }}</div>
-                        <div class="ticket-create-time">{{ ticket.create_time }}</div>
-                        <div class="ticket-user">{{ ticket.user }}</div>
-                        <div class="ticket-type">{{ ticket.type }}</div>
-                        <div class="ticket-status">{{ ticket.status }}</div>
-                        <div class="ticket-relevance">{{ ticket.relevance }}</div>
-                    </a>
-                </div>
-            
-            {% endfor %}
-
-        </tbody>
-    </table>
+    <div class="ticket-container">
+        <div class="ticket-header">
+            <div class="ticket-id">ID</div>
+            <div class="ticket-title">Ticket Title</div>
+            <div class="ticket-date"">Create Time</div>
+            <div class="ticket-username">Username</div>
+            <div class="ticket-status">Status</div>
+            <div class="ticket-relevance">Relevance</div>
+        </div>
+        {% for ticket in tickets %}
+            <div class="ticket-rectangle">
+                <a href="{% url 'view_ticket' ticket.ticket_id %}">
+                    <span class="ticket-id">{{ ticket.ticket_id }}</span>
+                    <span class="ticket-title">{{ ticket.title }}</span>
+                    <span class="ticket-date">{{ ticket.create_time|date:'d.m.Y' }}</span>
+                    <span class="ticket-username">{{ ticket.user.username }}</span>
+                    <span class="ticket-status" 
+                          {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                          {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                          {% elif ticket.status == "Closed" %} style="background-color: red;"
+                          {% else %} style="background-color: green;"
+                          {% endif %}>
+                          {{ ticket.status }}
+                    </span>
+                    <span class="ticket-relevance">{{ ticket.relevance }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>    
 </body>
 </html>

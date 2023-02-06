@@ -3,15 +3,24 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/dark.css' %}" id="dark-style">'
-    <form method="post" action="{% url 'login' %}">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Login</button>
-    </form>
-    <a href="{% url 'register' %}">Don't have an account? Register</a>
-</body>
+    <div class="sidebar">
+        <img src="{% static 'images/icon.png' %}" class="sidebar-icon">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}" class="sidebar-link">Login</a>
+        <a href="{% url 'register' %}" class="sidebar-link">Register</a>
+    </div>
+    <h1>Ticket Tackler</h1>
+    
+    <div class="login-form-container">
+        <form method="post" action="{% url 'login' %}" class="login-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="form-submit-button">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register</a></p>
+    </div>
+</body>    

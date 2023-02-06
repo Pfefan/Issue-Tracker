@@ -24,7 +24,7 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-
+@login_required(login_url='login')
 def create_ticket(request):
     """
     Handle the creation of a new ticket.
@@ -51,9 +51,19 @@ def create_ticket(request):
     else:
         return render(request, 'create_ticket.html')
 
-
-@login_required
+@login_required(login_url='login')
 def view_ticket(request, ticket_id):
+    """
+    A view for viewing the details of a ticket and handling the actions performed on the ticket. 
+    Actions include editing the ticket and closing the ticket. It also allows replying to the ticket.
+    
+    Parameters: 
+    request (HttpRequest): The request object used for handling user inputs.
+    ticket_id (int): The primary key of the ticket to be viewed.
+    
+    Returns:
+    render: Renders the view_ticket.html template with the context containing the details of the ticket and its replies.
+    """
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     replies = Ticket_Comments.objects.filter(ticket_id=ticket_id)
 
@@ -74,8 +84,19 @@ def view_ticket(request, ticket_id):
     }
     return render(request, 'view_ticket.html', context)
 
-
 def login_view(request):
+    """
+    A view for handling user login requests. 
+    If the request method is POST, the form data is processed and if the form is valid, the user is authenticated and logged in. 
+    If the request method is GET, a blank form is displayed for the user to fill.
+    
+    Parameters: 
+    request (HttpRequest): The request object used for handling user inputs.
+    
+    Returns:
+    render: Renders the login.html template with the form for authentication.
+    redirect: Redirects to the index page if the user is successfully authenticated.
+    """
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -90,10 +111,15 @@ def login_view(request):
     return render(request, 'login.html', {'form': form})
 
 def logout_view(request):
+    """View function that logs out the user and redirects them to the login page."""
     logout(request)
     return redirect('login')
 
 def register_view(request):
+    """View function that handles user registration.
+    If the request method is POST, the form data is processed and a new user is created and authenticated.
+    If the request method is GET, an empty form is displayed for the user to fill out.
+    """
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
