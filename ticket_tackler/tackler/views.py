@@ -37,28 +37,40 @@ def create_ticket(request):
         or a redirect to the login page if the user is not authenticated.
         Otherwise, it returns the create_ticket.html template.
     """
-
+    users = User.objects.all()
+    context = {'users': users}
     if request.method == 'POST':
         if request.user.is_authenticated:
             title = request.POST.get('title')
             description = request.POST.get('description')
             ticket_type = request.POST.get('type')
             relevance = request.POST.get('relevance')
-            ticket_instance = Ticket.objects.create(title=title, content=description, type = ticket_type, relevance = relevance, is_open=True, user=request.user)
+            assigned_users_ids = request.POST.getlist('assigned_users')
+            ticket_instance = Ticket.objects.create(
+                title=title,
+                content=description,
+                type=ticket_type,
+                relevance=relevance,
+                is_open=True,
+                user=request.user
+            )
+            ticket_instance.assigned_users.set(User.objects.filter(id__in=assigned_users_ids))
             return redirect('index')
         else:
             return redirect('login')
     else:
-        return render(request, 'create_ticket.html')
+        return render(request, 'create_ticket.html', context)
+
+
 
 @login_required(login_url='login')
 def view_ticket(request, ticket_id):
     """
     A view for viewing the details of a ticket and handling the actions performed on the ticket. 
     Actions include editing the ticket and closing the ticket. It also allows replying to the ticket.
-    
-    Parameters: 
-    request (HttpRequest): The request object used for handling user inputs.
+
+    Parameters:
+     request (HttpRequest): The request object used for handling user inputs.
     ticket_id (int): The primary key of the ticket to be viewed.
     
     Returns:
@@ -67,8 +79,9 @@ def view_ticket(request, ticket_id):
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     replies = Ticket_Comments.objects.filter(ticket_id=ticket_id)
 
+
     if request.method == 'POST':
-        if request.user == ticket.user_id:
+        if request.user.id == ticket.user.id:
             if 'edit' in request.POST:
                 ticket.title = request.POST.get('title')
                 ticket.content = request.POST.get('content')
@@ -76,8 +89,8 @@ def view_ticket(request, ticket_id):
             elif 'close' in request.POST:
                 ticket.resolved = True
                 ticket.save()
-        if 'Reply' in request.POST:    
-            reply = Ticket_Comments.objects.create(ticket_id=ticket, user_id=request.user, content=request.POST.get('content'))
+        if 'Reply' in request.POST:
+            reply = Ticket_Comments.objects.create(ticket=ticket, user=request.user, content=request.POST.get('content'))
     context = {
         'ticket': ticket,
         'replies': replies,

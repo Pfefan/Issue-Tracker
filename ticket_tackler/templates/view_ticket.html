@@ -4,9 +4,17 @@
 <head>
     <title>View Ticket</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/view_ticket.css' %}" id="view_ticket-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
-<body>      
+<body>
+    <div class="sidebar">
+        <img src="{% static 'images/icon.png' %}" class="sidebar-icon">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+          
     <div class="username-container" id="username-container">
         <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
     </div>    
@@ -20,42 +28,36 @@
         </form>
     </div>    
 
-    <div>
-        <h2>{{ ticket.title }}</h2>
-        <p>{{ ticket.content }}</p>
-        <p>Type: {{ ticket.type }}</p>
-        <p>Relevance: {{ ticket.relevance }}</p>
-        <p>Resolved: {{ ticket.is_open }}</p>
-        <p>Create Time: {{ ticket.create_time }}</p>
+    <div id="ticket-container">
+        <h1 id="ticket-title">{{ ticket.title }}</h1>
+        <p id="ticket-content">{{ ticket.content }}</p>
         {% if user == ticket.user %}
-        <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">
+        <form id="ticket-edit-form" method="post">
             {% csrf_token %}
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" value="{{ ticket.title }}">
-            <br>
-            <label for="content">Content:</label>
-            <textarea id="content" name="content">{{ ticket.content }}</textarea>
-            <br>
-            <input type="submit" value="edit_ticket" name="edit">
-            <input type="submit" value="close_ticket" name="close">
+            <input id="ticket-edit-title" type="text" name="title" value="{{ ticket.title }}">
+            <textarea id="ticket-edit-content" name="content">{{ ticket.content }}</textarea>
+            <input id="ticket-edit-submit" type="submit" value="Edit" name="edit">
         </form>
-    {% endif %}
+        <form id="ticket-close-form" method="post">
+            {% csrf_token %}
+            <input id="ticket-close-submit" type="submit" value="Close" name="close">
+        </form>
+        {% endif %}
     </div>
-    <div>
-        <div>
-            <h3>Replies</h3>
-            {% for reply in replies %}
-                <p>{{ reply.content }}</p>
-                <p>Reply Time: {{ reply.create_time }}</p>
-            {% endfor %}
-            <form method="POST" action="{% url 'view_ticket' ticket.ticket_id %}">
-                {% csrf_token %}
-                <textarea name="content"></textarea>
-                <input type="hidden" name="Reply" value="true">
-                <input type="submit" value="Reply">
-            </form>
-            
-        </div>
+    
+    <div id="ticket-replies-container">
+        <h2>Replies:</h2>
+        {% for reply in replies %}
+            <div id="ticket-reply">
+                <p id="ticket-reply-content">{{ reply.content }}</p>
+            </div>
+        {% endfor %}
+        <form id="ticket-reply-form" method="post">
+            {% csrf_token %}
+            <textarea id="ticket-reply-textarea" name="content"></textarea>
+            <input id="ticket-reply-submit" type="submit" value="Reply" name="Reply">
+        </form>
     </div>
+
 </body>
 </html>    

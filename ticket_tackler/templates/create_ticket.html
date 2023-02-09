@@ -48,6 +48,13 @@
             <option value="high">High</option>
         </select>
         <br>
+        <label for="assigned_users">Assigned Users:</label>
+        <select name="assigned_users" id="assigned_users" multiple>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        <br>
         <input type="submit" value="Create Ticket">
     </form>    
 </body>

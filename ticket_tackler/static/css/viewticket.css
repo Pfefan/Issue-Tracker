@@ -1,0 +1,59 @@
+#ticket-container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#ticket-title {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+#ticket-content {
+    font-size: 1.5em;
+}
+
+#ticket-edit-form {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+#ticket-edit-title, #ticket-edit-content {
+    width: 80%;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+
+#ticket-edit-submit {
+    width: 20%;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+
+#ticket-close-form {
+    display: inline-block;
+    margin: 1em 0;
+}
+
+#ticket-close-submit {
+    width: 20%;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+
+#ticket-replies-container {
+    width: 80%;
+    margin: 2em auto;
+    text-align: center;
+}
+
+#ticket-reply {
+    border: 1px solid black;
+    padding: 1em;
+    margin: 1em 0;
+}
+
+#ticket-reply-content {
+    font-size: 1.5em;
+}

@@ -1,0 +1,101 @@
+#create-ticket-button {
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    border: none;
+}
+
+#create-ticket-button:hover {
+    background-color: #616161;
+}
+
+#ticket-selector {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ccc;
+}
+
+#search-bar {
+    margin-right: 10px;
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ccc;
+}
+
+.ticket-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.ticket-header {
+    display: flex;
+    font-weight: bold;
+    text-decoration: none; 
+    color: #ccc;
+    padding: 10px;
+}
+
+.ticket-header div {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.ticket-rectangle a {
+    display: flex;
+    padding: 5px;
+    text-decoration: none; 
+    background-color: #474747;
+    color: #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ticket-rectangle span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.ticket-id {
+    width: 5%;
+}
+
+.ticket-title {
+    width: 30%;
+}
+.ticket-assigned-users {
+    width: 20;;
+}
+.ticket-date {
+    width: 15%;
+}
+
+.ticket-username {
+    width: 15%;
+}
+
+.ticket-type {
+    width: 10%;
+}
+
+.ticket-status {
+    width: 10%;
+}
+
+.ticket-relevance {
+    width: 5%;
+}

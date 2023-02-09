@@ -169,11 +169,11 @@ a {
 }
 
 .ticket-id {
-    width: 10%;
+    width: 5%;
 }
 
 .ticket-title {
-    width: 30%;
+    width: 50%;
 }
 
 .ticket-date {
@@ -181,7 +181,11 @@ a {
 }
 
 .ticket-username {
-    width: 30%;
+    width: 15%;
+}
+
+.ticket-type {
+    width: 10%;
 }
 
 .ticket-status {
@@ -191,7 +195,6 @@ a {
 .ticket-relevance {
     width: 5%;
 }
-
 
 .login-form-container {
     width: 35%;
