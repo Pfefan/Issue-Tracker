@@ -5,6 +5,8 @@
     <title>View Ticket</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
     <link rel="stylesheet" type="text/css" href="{% static 'css/view_ticket.css' %}" id="view_ticket-style">
+    <script type="text/javascript" src="{% static 'js/username-popup.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/toggle-edit.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
@@ -29,19 +31,87 @@
     </div>    
 
     <div id="ticket-container">
-        <h1 id="ticket-title">{{ ticket.title }}</h1>
-        <p id="ticket-content">{{ ticket.content }}</p>
-        {% if user == ticket.user %}
-        <form id="ticket-edit-form" method="post">
-            {% csrf_token %}
-            <input id="ticket-edit-title" type="text" name="title" value="{{ ticket.title }}">
-            <textarea id="ticket-edit-content" name="content">{{ ticket.content }}</textarea>
-            <input id="ticket-edit-submit" type="submit" value="Edit" name="edit">
-        </form>
-        <form id="ticket-close-form" method="post">
-            {% csrf_token %}
-            <input id="ticket-close-submit" type="submit" value="Close" name="close">
-        </form>
+        {% if user != ticket.user %}
+            <h1 class="ticket-title">{{ ticket.title }}</h1>
+            <span class="ticket-username">Creator: {{ ticket.user.username }}</span>
+            <span class="ticket-date">Created at: {{ ticket.create_time|date:'d.m.Y' }}</span>
+            <span class="ticket-assigned-users"> Assgined Users: 
+                {% for user in ticket.assigned_users.all %}
+                    {{ user.username }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </span>
+            <span class="ticket-type">Type: {{ ticket.type }}</span>
+            <span class="ticket-relevance">Rel: {{ ticket.relevance }}</span>
+            <span class="ticket-status" 
+                {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                {% elif ticket.status == "Closed" %} style="background-color: red;"
+                {% else %} style="background-color: green;"
+                {% endif %}>
+                {{ ticket.status }}
+            </span>
+            <span class="ticket-content">{{ ticket.content }}</span>
+        {% else %}
+            <div id="ticket-display">
+                <h1 class="ticket-title">{{ ticket.title }}</h1>
+                <span class="ticket-username">Creator: {{ ticket.user.username }}</span>
+                <span class="ticket-date">Created at: {{ ticket.create_time|date:'d.m.Y' }}</span>
+                <span class="ticket-assigned-users"> Assgined Users: 
+                    {% for user in ticket.assigned_users.all %}
+                        {{ user.username }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </span>
+                <span class="ticket-type">Type: {{ ticket.type }}</span>
+                <span class="ticket-relevance">Rel: {{ ticket.relevance }}</span>
+                <span class="ticket-status" 
+                    {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                    {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                    {% elif ticket.status == "Closed" %} style="background-color: red;"
+                    {% else %} style="background-color: green;"
+                    {% endif %}>
+                    {{ ticket.status }}
+                </span>
+                <button id="ticket-edit-button" onclick="toggleEdit()">Edit</button>
+                <form id="ticket-close-form" method="post" style="display: inline-block;">
+                    {% csrf_token %}
+                    <input id="ticket-close-submit" type="submit" value="Close" name="close">
+                </form>
+                
+                <span class="ticket-content">{{ ticket.content }}</span>
+            </div>
+            <form id="ticket-edit-form" method="post",  style="display: none;">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="ticket-title">Title:</label>
+                    <input type="text" class="form-control" id="ticket-title-edit" name="ticket-title" value="{{ ticket.title }}">
+                </div>
+                <div class="form-group">
+                    <label for="ticket-content-edit">Content:</label>
+                    <textarea class="form-control" id="ticket-content" name="ticket-content" rows="3">{{ ticket.content }}</textarea>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-assigned-users">Assigned Users:</label>
+                    <select multiple class="form-control" id="ticket-assigned-users-edit" name="ticket-assigned-users">
+                        {% for user in users %}
+                            <option value="{{ user.id }}">{{ user.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-type">Type:</label>
+                    <select class="form-control" id="ticket-type-edit" name="ticket-type">
+                        <option value="{{ ticket.type }}" selected>{{ ticket.type }}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="ticket-relevance">Relevance:</label>
+                    <select class="form-control" id="ticket-relevance-edit" name="ticket-relevance">
+                        <option value="{{ ticket.relevance }}" selected>{{ ticket.relevance }}</option>
+                    </select>
+                </div>
+                <input type="submit" id="submit-save" value="Save" class="submit-save">
+                <input type="button" id="submit-cancel" value="Cancel" class="submit-cancel" onclick="toggleEdit()">
+            </form>      
         {% endif %}
     </div>
     

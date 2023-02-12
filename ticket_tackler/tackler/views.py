@@ -76,26 +76,33 @@ def view_ticket(request, ticket_id):
     Returns:
     render: Renders the view_ticket.html template with the context containing the details of the ticket and its replies.
     """
+    users = User.objects.all()
     ticket = get_object_or_404(Ticket, pk=ticket_id)
     replies = Ticket_Comments.objects.filter(ticket_id=ticket_id)
 
-
     if request.method == 'POST':
-        if request.user.id == ticket.user.id:
-            if 'edit' in request.POST:
-                ticket.title = request.POST.get('title')
-                ticket.content = request.POST.get('content')
-                ticket.save()
-            elif 'close' in request.POST:
-                ticket.resolved = True
-                ticket.save()
         if 'Reply' in request.POST:
             reply = Ticket_Comments.objects.create(ticket=ticket, user=request.user, content=request.POST.get('content'))
+        elif request.user.id == ticket.user.id and 'close' in request.POST:
+            ticket.resolved = True
+            ticket.save()
+        elif 'ticket-title' in request.POST:
+            ticket.title = request.POST.get('ticket-title')
+            if request.POST.getlist('ticket-assigned-users') != []:
+                ticket.assigned_users.set(User.objects.filter(id__in=request.POST.getlist('ticket-assigned-users')))
+            ticket.type = request.POST.get('ticket-type')
+            ticket.relevance = request.POST.get('ticket-relevance')
+            ticket.content = request.POST.get('ticket-content')
+            ticket.save()
+    
     context = {
         'ticket': ticket,
         'replies': replies,
+        'users' : users,
     }
     return render(request, 'view_ticket.html', context)
+
+
 
 def login_view(request):
     """

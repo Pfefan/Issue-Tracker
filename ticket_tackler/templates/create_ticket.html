@@ -4,6 +4,8 @@
 <head>
     <title>Create Ticket</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_ticket.css' %}" id="create-ticket-style">
+    <script type="text/javascript" src="{% static 'js/username-popup.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
@@ -17,7 +19,9 @@
     <h1>Create Ticket</h1>
     <div class="username-container" id="username-container">
         <img src="{% static 'images/default_user.png' %}" alt="Default Account Image">
-    </div>    
+    </div>  
+
+
     <div id="user-popup" style="display: none;">
         <p>Name: {{ user.username }}</p>
         <p>Email: {{ user.email }}</p>
@@ -26,6 +30,7 @@
             <input type="submit" value="Logout">
         </form>
     </div>    
+
     <form method="post" action="{% url 'create_ticket' %}">
         {% csrf_token %}
         <label for="title">Title:</label>

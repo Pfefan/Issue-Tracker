@@ -1,0 +1,83 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 50px auto;
+  }
+  
+#title-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#description-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+#topic-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#relevance-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#assigned-user-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+#title-input {
+    width: 100%;
+    height: 40px;
+    font-size: 20px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+#description-textarea {
+    width: 100%;
+    height: 200px;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+#topic-select, #relevance-select, #assigned-user-select {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid gray;
+}
+
+#create-ticket {
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    margin-top: 20px;
+}

@@ -61,27 +61,51 @@
         </div>
         {% for ticket in tickets %}
             <div class="ticket-rectangle">
-                <a href="{% url 'view_ticket' ticket.ticket_id %}">
-                    <span class="ticket-id">{{ ticket.ticket_id }}</span>
-                    <span class="ticket-title">{{ ticket.title }}</span>
-                    <span class="ticket-assigned-users">
-                        {% for user in ticket.assigned_users.all %}
-                            {{ user.username }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </span>
-                    <span class="ticket-date">{{ ticket.create_time|date:'d.m.Y' }}</span>
-                    <span class="ticket-username">{{ ticket.user.username }}</span>
-                    <span class="ticket-type">{{ ticket.type }}</span>
-                    <span class="ticket-status" 
-                          {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
-                          {% elif ticket.status == "In progress" %} style="background-color: orange;"
-                          {% elif ticket.status == "Closed" %} style="background-color: red;"
-                          {% else %} style="background-color: green;"
-                          {% endif %}>
-                          {{ ticket.status }}
-                    </span>
-                    <span class="ticket-relevance">{{ ticket.relevance }}</span>
-                </a>
+                {% if request.user in ticket.assigned_users.all or request.user == ticket.user or request.user.is_staff %}
+                    <a href="{% url 'view_ticket' ticket.ticket_id %}">
+                        <span class="ticket-id">{{ ticket.ticket_id }}</span>
+                        <span class="ticket-title">{{ ticket.title }}</span>
+                        <span class="ticket-assigned-users">
+                            {% for user in ticket.assigned_users.all %}
+                                {{ user.username }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                        <span class="ticket-date">{{ ticket.create_time|date:'d.m.Y' }}</span>
+                        <span class="ticket-username">{{ ticket.user.username }}</span>
+                        <span class="ticket-type">{{ ticket.type }}</span>
+                        <span class="ticket-status" 
+                              {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                              {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                              {% elif ticket.status == "Closed" %} style="background-color: red;"
+                              {% else %} style="background-color: green;"
+                              {% endif %}>
+                              {{ ticket.status }}
+                        </span>
+                        <span class="ticket-relevance">{{ ticket.relevance }}</span>
+                    </a>
+                {% else %}
+                    <a>
+                        <span class="ticket-id">{{ ticket.ticket_id }}</span>
+                        <span class="ticket-title">{{ ticket.title }}</span>
+                        <span class="ticket-assigned-users">
+                            {% for user in ticket.assigned_users.all %}
+                                {{ user.username }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </span>
+                        <span class="ticket-date">{{ ticket.create_time|date:'d.m.Y' }}</span>
+                        <span class="ticket-username">{{ ticket.user.username }}</span>
+                        <span class="ticket-type">{{ ticket.type }}</span>
+                        <span class="ticket-status" 
+                            {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                            {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                            {% elif ticket.status == "Closed" %} style="background-color: red;"
+                            {% else %} style="background-color: green;"
+                            {% endif %}>
+                            {{ ticket.status }}
+                        </span>
+                        <span class="ticket-relevance">{{ ticket.relevance }}</span>
+                    </a>
+                {% endif %}
             </div>
         {% endfor %}
     </div> 

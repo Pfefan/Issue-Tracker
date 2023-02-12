@@ -1,0 +1,151 @@
+.ticket-id,
+.ticket-assigned-users,
+.ticket-date,
+.ticket-username,
+.ticket-type,
+.ticket-status,
+.ticket-relevance,
+.ticket-content {
+    display: inline-block;
+    padding: 5px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
+
+#ticket-edit-button, #ticket-close-submit {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    padding: 10px 15px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin-left: 20px;
+}
+
+.ticket-container a {
+    display: flex;
+    padding: 5px;
+    text-decoration: none; 
+    background-color: #474747;
+    color: #ccc;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.ticket-container span {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.ticket-username {
+    width: 10%;
+}
+
+.ticket-date {
+    width: 10%;
+    padding-right: 10%;
+}
+
+.ticket-assigned-users {
+    width: 20%;
+}
+
+.ticket-type {
+    width: 5%;
+}
+
+.ticket-relevance {
+    width: 5%;
+}
+
+.ticket-status {
+    width: 5%;
+}
+
+.ticket-content, .ticket-edit-content {
+    display: block;
+    width: 70%;
+    margin-top: 10px;
+    background-color: #474747;
+    border-color: #a9a9a9;
+    color: #ccc;
+    padding: 10px;
+    box-sizing: border-box;
+    word-wrap: break-word;
+}
+
+#ticket-edit-form {
+    display: none;
+    background-color: #474747;
+    color: #ccc;
+    box-sizing: border-box;
+    padding: 10px;
+    word-wrap: break-word;
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    width: 70%;
+}
+    
+#ticket-edit-form label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+    
+.ticket-title-edit, .ticket-content-edit {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    margin-top: 10px;
+}
+
+.submit-save {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    padding: 10px 15px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.submit-cancel {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+    padding: 10px 15px;
+    border: none;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+
+#ticket-edit-form .form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: white;
+}
+
+#ticket-edit-form select.form-control {
+    height: auto;
+}
+
+#ticket-edit-form textarea.form-control {
+    height: 200px;
+}
