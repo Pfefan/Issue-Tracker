@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import RegisterForm
@@ -78,14 +79,20 @@ def view_ticket(request, ticket_id):
     """
     users = User.objects.all()
     ticket = get_object_or_404(Ticket, pk=ticket_id)
-    replies = Ticket_Comments.objects.filter(ticket_id=ticket_id)
+    comments = Ticket_Comments.objects.filter(ticket_id=ticket_id)
 
     if request.method == 'POST':
-        if 'Reply' in request.POST:
-            reply = Ticket_Comments.objects.create(ticket=ticket, user=request.user, content=request.POST.get('content'))
+        if 'Comment' in request.POST:
+            comment = Ticket_Comments.objects.create(ticket=ticket, user=request.user, content=request.POST.get('content'))
+            request.POST = {}
         elif request.user.id == ticket.user.id and 'close' in request.POST:
-            ticket.resolved = True
+            ticket.is_open = False
+            ticket.status = "Closed"
             ticket.save()
+        elif 'status-submit' in request.POST:
+            ticket.status = request.POST.get('change_status')
+            ticket.save()
+
         elif 'ticket-title' in request.POST:
             ticket.title = request.POST.get('ticket-title')
             if request.POST.getlist('ticket-assigned-users') != []:
@@ -94,15 +101,15 @@ def view_ticket(request, ticket_id):
             ticket.relevance = request.POST.get('ticket-relevance')
             ticket.content = request.POST.get('ticket-content')
             ticket.save()
-    
+        else:
+            print(request.POST)
+
     context = {
         'ticket': ticket,
-        'replies': replies,
+        'comments': comments,
         'users' : users,
     }
     return render(request, 'view_ticket.html', context)
-
-
 
 def login_view(request):
     """

@@ -74,12 +74,13 @@
                         <span class="ticket-username">{{ ticket.user.username }}</span>
                         <span class="ticket-type">{{ ticket.type }}</span>
                         <span class="ticket-status" 
-                              {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
-                              {% elif ticket.status == "In progress" %} style="background-color: orange;"
-                              {% elif ticket.status == "Closed" %} style="background-color: red;"
-                              {% else %} style="background-color: green;"
-                              {% endif %}>
-                              {{ ticket.status }}
+                            {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
+                            {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                            {% elif ticket.status == "Resolved" % } style="background-color: green;"
+                            {% elif ticket.status == "Closed" %} style="background-color: red;"
+                            {% else %} style="background-color: purple;"
+                            {% endif %}>
+                            {{ ticket.status }}
                         </span>
                         <span class="ticket-relevance">{{ ticket.relevance }}</span>
                     </a>
@@ -98,8 +99,9 @@
                         <span class="ticket-status" 
                             {% if ticket.status == "Open" %} style="background-color: rgb(33, 75, 139);"
                             {% elif ticket.status == "In progress" %} style="background-color: orange;"
+                            {% elif ticket.status == "Resolved" % } style="background-color: green;"
                             {% elif ticket.status == "Closed" %} style="background-color: red;"
-                            {% else %} style="background-color: green;"
+                            {% else %} style="background-color: purple;"
                             {% endif %}>
                             {{ ticket.status }}
                         </span>
