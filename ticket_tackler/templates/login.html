@@ -4,6 +4,7 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/authenticator_layout.css' %}" id="layout-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
@@ -13,7 +14,7 @@
         <a href="{% url 'login' %}" class="sidebar-link">Login</a>
         <a href="{% url 'register' %}" class="sidebar-link">Register</a>
     </div>
-    <h1>Ticket Tackler</h1>
+    <h1 id="Login-id">Login</h1>
     
     <div class="login-form-container">
         <form method="post" action="{% url 'login' %}" class="login-form">

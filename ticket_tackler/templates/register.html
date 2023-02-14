@@ -4,12 +4,20 @@
 <head>
     <title>Register</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/layout.css' %}" id="layout-style">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/authenticator_layout.css' %}" id="layout-style">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}" type="image/x-icon">
 </head>
 <body>
-    <form method="post" action="{% url 'register' %}">
+    <div class="sidebar">
+        <img src="{% static 'images/icon.png' %}" class="sidebar-icon">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'register' %}">Register</a>
+    </div>
+    <h1 id="Register-id">Register</h1>
+    <form method="post" action="{% url 'register' %}" id="register-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
+        <button type="submit" id="register-button">Register</button>
+      </form>
 </body>
